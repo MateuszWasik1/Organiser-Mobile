@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Categories>> fetchCategories() async {
   final response =
-      await http.get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+      await http.get(Uri.parse('https://localhost:44393/api/Categories'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
@@ -12,12 +12,12 @@ Future<List<Categories>> fetchCategories() async {
 
     for (var i in jsonResponse) {
       photos.add(Categories(
-          CID: i['CID'],
-          CGID: i['CGID'],
-          CName: i['CName'],
-          CStartDate: i['CStartDate'],
-          CEndDate: i['CEndDate'],
-          CBudget: i['CBudget']));
+          cid: i['cid'],
+          cgid: i['cgid'],
+          cName: i['cName'],
+          cStartDate: i['cStartDate'],
+          cEndDate: i['cEndDate'],
+          cBudget: i['cBudget']));
     }
     return photos;
   } else {
@@ -26,30 +26,30 @@ Future<List<Categories>> fetchCategories() async {
 }
 
 class Categories {
-  final int CID;
-  final String CGID;
-  final String CName;
-  final DateTime CStartDate;
-  final DateTime CEndDate;
-  final double CBudget;
+  final int cid;
+  final String cgid;
+  final String cName;
+  final String cStartDate;
+  final String cEndDate;
+  final double cBudget;
 
   const Categories({
-    required this.CID,
-    required this.CGID,
-    required this.CName,
-    required this.CStartDate,
-    required this.CEndDate,
-    required this.CBudget,
+    required this.cid,
+    required this.cgid,
+    required this.cName,
+    required this.cStartDate,
+    required this.cEndDate,
+    required this.cBudget,
   });
 
   factory Categories.fromJson(Map<String, dynamic> json) {
     return Categories(
-      CID: json['CID'],
-      CGID: json['CGID'],
-      CName: json['CName'],
-      CStartDate: json['CStartDate'],
-      CEndDate: json['CEndDate'],
-      CBudget: json['CBudget'],
+      cid: json['cid'],
+      cgid: json['cgid'],
+      cName: json['cName'],
+      cStartDate: json['cStartDate'],
+      cEndDate: json['cEndDate'],
+      cBudget: json['cBudget'],
     );
   }
 }
@@ -78,23 +78,65 @@ class _CategoriesPageState extends State<CategoriesPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //print('run command flutter run --web-renderer html');
-            return SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 50,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: 100,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 8.0,
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 6.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      color: Color.fromRGBO(225, 225, 225, 1),             
+                    ),      
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                snapshot.data![index].cName,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                snapshot.data![index].cStartDate,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                snapshot.data![index].cEndDate,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                snapshot.data![index].cBudget.toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    // child: Image.network(
-                    //   snapshot.data![index].url,
-                    // ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             );
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');

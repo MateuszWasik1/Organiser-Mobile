@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'categories.dart';
 
 void main() {
@@ -12,6 +11,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
+//Run flutter by flutter run -d chrome --web-browser-flag "--disable-web-security"
 
 class _MyAppState extends State<MyApp> {
   ScrollController scrollController = ScrollController();
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Organiser'),
         ),
         body: Scaffold(
-          backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
+          backgroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
           body: SingleChildScrollView(
             controller: scrollController,
             child: pages[currentPage],
