@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'categories.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,11 +17,11 @@ class _MyAppState extends State<MyApp> {
   ScrollController scrollController = ScrollController();
   bool upwardArrow = false;
   int currentPage = 0;
-  //List<Widget> pages = const [
-    // HomePage(),
+  List<Widget> pages = const [
+    CategoriesPage(),
     // SearchPage(),
     // AccountPage(),
-  //];
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
           body: SingleChildScrollView(
             controller: scrollController,
-            //child: pages[currentPage],
+            child: pages[currentPage],
           ),
         ),
         floatingActionButton: FloatingActionButton(
