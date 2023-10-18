@@ -73,80 +73,92 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: FutureBuilder<List<Categories>>(
-        future: futurePhotos,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            //print('run command flutter run --web-renderer html');
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: 100,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 8.0,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 6.0),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Color.fromRGBO(225, 225, 225, 1),             
-                    ),      
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                snapshot.data![index].cName,
-                                style: const TextStyle(
-                                  color: Colors.black,
+        child: Column(
+      children: [
+        Row(children: const <Widget>[
+          Expanded(child: Text("Nazwa kategorii")),
+          Expanded(child: Text("Data początku")),
+          Expanded(child: Text("Data końca")),
+          Expanded(child: Text("Budżet")),
+        ]),
+        Center(
+          child: FutureBuilder<List<Categories>>(
+            future: futurePhotos,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                //print('run command flutter run --web-renderer html');
+                //tutaj
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 100,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 8.0,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 6.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Color.fromRGBO(225, 225, 225, 1),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    snapshot.data![index].cName,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                snapshot.data![index].cStartDate,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                Expanded(
+                                  child: Text(
+                                    snapshot.data![index].cStartDate,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                snapshot.data![index].cEndDate,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                Expanded(
+                                  child: Text(
+                                    snapshot.data![index].cEndDate,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                snapshot.data![index].cBudget.toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                Expanded(
+                                  child: Text(
+                                    snapshot.data![index].cBudget.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                const Icon(Icons.edit),
+                                const Icon(Icons.delete)
+                              ],
                             ),
-                            const Icon(Icons.edit),
-                            const Icon(Icons.delete)
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
 
-          return const CircularProgressIndicator();
-        },
-      ),
-    );
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
+      ],
+    ));
   }
 }
