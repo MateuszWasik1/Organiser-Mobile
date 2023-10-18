@@ -130,6 +130,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                 ),
                               ),
                             ),
+                            const Icon(Icons.edit),
+                            const Icon(Icons.delete)
                           ],
                         ),
                       ),
