@@ -91,7 +91,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         child: Column(
       children: [
         if(isEditEnabled)
-          Text("lol"),
+          EditDataWidget(),
         Row(children: const <Widget>[
           Expanded(child: Text("Nazwa kategorii")),
           Expanded(child: Text("Data początku")),
@@ -227,3 +227,107 @@ class DeleteButton extends StatelessWidget {
 }
 
 //EditWidget
+class EditDataWidget extends StatefulWidget {
+  @override
+  State<EditDataWidget> createState() => _EditDataWidgetState();
+}
+
+class _EditDataWidgetState extends State<EditDataWidget> {
+  String name = '';
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  double budget = 0.0;
+
+  // void _showStartDatePicker(BuildContext context) async {
+  //   DateTime pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: startDate,
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (pickedDate != null) {
+  //     setState(() {
+  //       startDate = pickedDate;
+  //     });
+  //   }
+  // }
+
+  // void _showEndDatePicker(BuildContext context) async {
+  //   DateTime pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: endDate,
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (pickedDate != null) {
+  //     setState(() {
+  //       endDate = pickedDate;
+  //     });
+  //   }
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Nazwa kategorii'),
+              onChanged: (value) {
+                setState(() {
+                  name = value;
+                });
+              },
+            ),
+            ListTile(
+              title: const Text('Data początku'),
+              subtitle: Text('${startDate.toLocal()}'.split(' ')[0]),
+              onTap: () {
+                //_showStartDatePicker(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Data końca'),
+              subtitle: Text('${endDate.toLocal()}'.split(' ')[0]),
+              onTap: () {
+                //_showEndDatePicker(context);
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Budżet'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                setState(() {
+                  budget = double.tryParse(value) ?? 0.0;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Handle saving the data here
+                print('Name: $name');
+                print('Start Date: $startDate');
+                print('End Date: $endDate');
+                print('Budget: $budget');
+              },
+              child: const Text('Zapisz'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Handle saving the data here
+                print('Name: $name');
+                print('Start Date: $startDate');
+                print('End Date: $endDate');
+                print('Budget: $budget');
+              },
+              child: const Text('Anuluj'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
