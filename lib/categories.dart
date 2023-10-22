@@ -78,7 +78,7 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   late Future<List<Categories>> futurePhotos;
-
+  late bool isEditEnabled = false;
   @override
   void initState() {
     super.initState();
@@ -90,6 +90,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return Center(
         child: Column(
       children: [
+        if(isEditEnabled)
+          Text("lol"),
         Row(children: const <Widget>[
           Expanded(child: Text("Nazwa kategorii")),
           Expanded(child: Text("Data początku")),
@@ -153,7 +155,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     ),
                                   ),
                                 ),
-                                const Icon(Icons.edit),
+                                EditButton(cgid: snapshot.data![index].cgid),
                                 DeleteButton(cgid: snapshot.data![index].cgid),
                               ],
                             ),
@@ -177,6 +179,31 @@ class _CategoriesPageState extends State<CategoriesPage> {
 }
 
 //Buttons
+class EditButton extends StatelessWidget {
+  const EditButton({super.key, required this.cgid});
+
+  final String cgid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.edit),
+          tooltip: 'Edytuj kategorię',
+          onPressed: () {
+            var state = context.findAncestorStateOfType<_CategoriesPageState>();
+            state?.setState(() {
+              state.isEditEnabled = true;
+            });
+          },
+        ),
+      ],
+    );
+  }
+}
+
 class DeleteButton extends StatelessWidget {
   const DeleteButton({super.key, required this.cgid});
 
@@ -198,3 +225,5 @@ class DeleteButton extends StatelessWidget {
     );
   }
 }
+
+//EditWidget
