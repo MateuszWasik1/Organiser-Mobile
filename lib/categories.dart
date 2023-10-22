@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+//GET
 Future<List<Categories>> fetchCategories() async {
   final response =
       await http.get(Uri.parse('https://localhost:44393/api/Categories'));
@@ -23,6 +24,20 @@ Future<List<Categories>> fetchCategories() async {
   } else {
     throw Exception('Failed to load photos');
   }
+}
+
+//DELETE
+
+Future<http.Response> deleteCategory(String cgid) async {
+  final http.Response response = await http.delete(Uri.parse('https://localhost:44393/api/Categories/Delete/$cgid'));
+
+  if(response.statusCode == 200){
+    fetchCategories();
+  }
+  else {
+    Exception('Usunięcie kategorii zakończyło się niepowodzeniem');
+  }
+  return response;
 }
 
 class Categories {
@@ -86,8 +101,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             future: futurePhotos,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                //print('run command flutter run --web-renderer html');
-                //tutaj
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: 100,
@@ -141,7 +154,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                   ),
                                 ),
                                 const Icon(Icons.edit),
-                                const Icon(Icons.delete)
+                                DeleteButton(cgid: snapshot.data![index].cgid),
                               ],
                             ),
                           ),
@@ -160,5 +173,28 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
       ],
     ));
+  }
+}
+
+//Buttons
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({super.key, required this.cgid});
+
+  final String cgid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.delete),
+          tooltip: 'Usuń kategorię',
+          onPressed: () {
+            deleteCategory(cgid);
+          },
+        ),
+      ],
+    );
   }
 }
