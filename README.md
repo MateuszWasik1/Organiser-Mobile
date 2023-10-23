@@ -1,16 +1,19 @@
 # organiser_mobile
 
-A new Flutter project.
+Instalacja:
 
-## Getting Started
+1. Należy pobrać repozytorium korzystając z gita.
+2. Należy otworzyć repozytorium przez edytor tekstu np.: VS Code
+3. Należy zainstalować Dart+Flutter bazując na oficjalnej dokumentacji: https://docs.flutter.dev/get-started/install
+4. Należy w terminalu VS code użyć komendy: cd ścieżka (np.: cd ~~\source\repos\Organiser-Mobile\organiser_mobile)
+5. Należy zweryfikować poprawność intalacji poprzez komendę: flutter doctor
+6. Należy uruchomić aplikację poprzez komendę: flutter run -d chrome --web-browser-flag "--disable-web-security"
 
-This project is a starting point for a Flutter application.
+UWAGA! 
+To jest tylko sposób na uruchomienie repozytorium dla apliakcji mobilnej, w celu poprawnego działania aplikacji należy również pobrać i uruchomić repozytorium dla Back-Endu!
 
-A few resources to get you started if this is your first Flutter project:
+Front-End: 
+https://github.com/MateuszWasik1/Organizer-Web
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Back-End: 
+https://github.com/MateuszWasik1/Organiser-BackEnd
