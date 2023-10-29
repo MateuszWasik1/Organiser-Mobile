@@ -90,33 +90,42 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return Center(
       child: Column(
         children: [
-          Row(
-            children: [
-              const Text(
-                "Kategorie",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Row(
+              children: [
+                const Expanded(
+                  flex: 8,
+                  child: Text(
+                    "Kategorie",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isEditEnabled = true;
-                  });
-                },
-                child: const Text('Dodaj'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isEditEnabled = true;
+                    });
+                  },
+                  child: const Text('Dodaj'),
+                ),
+              ],
+            ),
           ),
           if (isEditEnabled) EditDataWidget(),
-          Row(
-            children: const <Widget>[
-              Expanded(child: Text("Nazwa kategorii")),
-              Expanded(child: Text("Data początku")),
-              Expanded(child: Text("Data końca")),
-              Expanded(child: Text("Budżet")),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: const <Widget>[
+                Expanded(child: Text("Nazwa kategorii")),
+                Expanded(child: Text("Data początku")),
+                Expanded(child: Text("Data końca")),
+                Expanded(child: Text("Budżet")),
+              ],
+            ),
           ),
           Center(
             child: FutureBuilder<List<Categories>>(
