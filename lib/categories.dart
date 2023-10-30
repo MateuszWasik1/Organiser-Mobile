@@ -29,8 +29,8 @@ Future<List<Categories>> fetchCategories() async {
 //Add / Edit
 
 Future<http.Response> editCategory(Categories category) async {
-  final http.Response response = await http
-      .delete(Uri.parse('https://localhost:44393/api/Categories/Save'), 
+  final http.Response response = await http.delete(
+      Uri.parse('https://localhost:44393/api/Categories/Save'),
       body: category);
 
   if (response.statusCode == 200) {
@@ -161,7 +161,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       return Card(
                         elevation: 8.0,
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 6.0),
+                          horizontal: 10.0,
+                          vertical: 6.0,
+                        ),
                         child: Container(
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -169,10 +171,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           ),
                           child: ListTile(
                             contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 10.0),
+                              horizontal: 20.0,
+                              vertical: 10.0,
+                            ),
                             subtitle: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -207,9 +212,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                       ),
                                     ),
                                   ),
-                                  EditButton(category: snapshot.data![index]),
+                                  EditButton(
+                                    category: snapshot.data![index],
+                                  ),
                                   DeleteButton(
-                                      cgid: snapshot.data![index].cgid),
+                                    cgid: snapshot.data![index].cgid,
+                                  ),
                                 ],
                               ),
                             ),
@@ -271,12 +279,9 @@ class DeleteButton extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         IconButton(
-          icon: const Icon(Icons.delete),
-          tooltip: 'Usuń kategorię',
-          onPressed: () {
-            deleteCategory(cgid);
-          },
-        ),
+            icon: const Icon(Icons.delete),
+            tooltip: 'Usuń kategorię',
+            onPressed: () => deleteCategory(cgid)),
       ],
     );
   }
@@ -334,16 +339,17 @@ class _EditDataWidgetState extends State<EditDataWidget> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: TextFormField(
-                  initialValue: widget.category.cName,
-                  decoration:
-                      const InputDecoration(labelText: 'Nazwa kategorii'),
-                  onChanged: (value) => cName = value),
+                initialValue: widget.category.cName,
+                decoration: const InputDecoration(labelText: 'Nazwa kategorii'),
+                onChanged: (value) => cName = value,
+              ),
             ),
             ListTile(
               title: const Text('Data początku'),
               subtitle: Text(
-                  '${DateTime.parse(widget.category.cStartDate).toLocal()}'
-                      .split(' ')[0]),
+                '${DateTime.parse(widget.category.cStartDate).toLocal()}'
+                    .split(' ')[0],
+              ),
               onTap: () {
                 _showStartDatePicker(context);
               },
@@ -351,8 +357,9 @@ class _EditDataWidgetState extends State<EditDataWidget> {
             ListTile(
               title: const Text('Data końca'),
               subtitle: Text(
-                  '${DateTime.parse(widget.category.cEndDate).toLocal()}'
-                      .split(' ')[0]),
+                '${DateTime.parse(widget.category.cEndDate).toLocal()}'
+                    .split(' ')[0],
+              ),
               onTap: () {
                 _showEndDatePicker(context);
               },
@@ -383,12 +390,7 @@ class _EditDataWidgetState extends State<EditDataWidget> {
                           cEndDate: cEndDate.toString(),
                           cBudget: cBudget);
 
-                          print(categoryToSave.cName);
-                          print(categoryToSave.cStartDate);
-                          print(categoryToSave.cEndDate);
-                          print(categoryToSave.cBudget);
-
-                      editCategory(categoryToSave);    
+                      editCategory(categoryToSave);
                     },
                     child: const Text('Zapisz'),
                   ),
