@@ -26,6 +26,20 @@ Future<List<Categories>> fetchCategories() async {
   }
 }
 
+//Add / Edit
+
+Future<http.Response> editCategory(Categories category) async {
+  final http.Response response = await http
+      .delete(Uri.parse('https://localhost:44393/api/Categories/Save'), 
+      body: category);
+
+  if (response.statusCode == 200) {
+  } else {
+    Exception('Usunięcie kategorii zakończyło się niepowodzeniem');
+  }
+  return response;
+}
+
 //DELETE
 
 Future<http.Response> deleteCategory(String cgid) async {
@@ -373,6 +387,8 @@ class _EditDataWidgetState extends State<EditDataWidget> {
                           print(categoryToSave.cStartDate);
                           print(categoryToSave.cEndDate);
                           print(categoryToSave.cBudget);
+
+                      editCategory(categoryToSave);    
                     },
                     child: const Text('Zapisz'),
                   ),
