@@ -79,6 +79,14 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   late Future<List<Categories>> futurePhotos;
   late bool isEditEnabled = false;
+  late Categories category = Categories(
+      cid: 0,
+      cgid: "",
+      cName: "",
+      cStartDate: DateTime.now().toString(),
+      cEndDate: DateTime.now().toString(),
+      cBudget: 0);
+
   @override
   void initState() {
     super.initState();
@@ -115,7 +123,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               ],
             ),
           ),
-          if (isEditEnabled) EditDataWidget(),
+          if (isEditEnabled) EditDataWidget(category: category),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
@@ -185,7 +193,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                       ),
                                     ),
                                   ),
-                                  EditButton(cgid: snapshot.data![index].cgid),
+                                  EditButton(category: snapshot.data![index]),
                                   DeleteButton(
                                       cgid: snapshot.data![index].cgid),
                                 ],
@@ -212,9 +220,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
 //Buttons
 class EditButton extends StatelessWidget {
-  const EditButton({super.key, required this.cgid});
+  const EditButton({super.key, required this.category});
 
-  final String cgid;
+  final Categories category;
 
   @override
   Widget build(BuildContext context) {
@@ -225,9 +233,11 @@ class EditButton extends StatelessWidget {
           icon: const Icon(Icons.edit),
           tooltip: 'Edytuj kategorię',
           onPressed: () {
-            var state = context.findAncestorStateOfType<_CategoriesPageState>();
-            state?.setState(() {
-              state.isEditEnabled = true;
+            var categoriesState =
+                context.findAncestorStateOfType<_CategoriesPageState>();
+            categoriesState?.setState(() {
+              categoriesState.isEditEnabled = true;
+              categoriesState.category = category;
             });
           },
         ),
@@ -259,44 +269,46 @@ class DeleteButton extends StatelessWidget {
 }
 
 //EditWidget
+// ignore: must_be_immutable
 class EditDataWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  var category;
+
+  EditDataWidget({Key? key, this.category}) : super(key: key);
+
   @override
   State<EditDataWidget> createState() => _EditDataWidgetState();
 }
 
 class _EditDataWidgetState extends State<EditDataWidget> {
-  String cName = '';
-  DateTime cStartDate = DateTime.now();
-  DateTime cEndDate = DateTime.now();
-  double cBudget = 0.0;
+  var cName = "";
+  var cStartDate = DateTime.now();
+  var cEndDate = DateTime.now();
+  var cBudget = 0.0;
 
-  // void _showStartDatePicker(BuildContext context) async {
-  //   DateTime pickedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: startDate,
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime(2101),
-  //   );
-  //   if (pickedDate != null) {
-  //     setState(() {
-  //       startDate = pickedDate;
-  //     });
-  //   }
-  // }
+  void _showStartDatePicker(BuildContext context) async {
+    DateTime pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.parse(widget.category.cStartDate),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+        ) ??
+        DateTime.now();
 
-  // void _showEndDatePicker(BuildContext context) async {
-  //   DateTime pickedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: endDate,
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime(2101),
-  //   );
-  //   if (pickedDate != null) {
-  //     setState(() {
-  //       endDate = pickedDate;
-  //     });
-  //   }
-  // }
+    cStartDate = pickedDate;
+  }
+
+  void _showEndDatePicker(BuildContext context) async {
+    DateTime pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.parse(widget.category.cEndDate),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+        ) ??
+        DateTime.now();
+
+    cEndDate = pickedDate;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -308,39 +320,38 @@ class _EditDataWidgetState extends State<EditDataWidget> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: TextFormField(
-                decoration: const InputDecoration(labelText: 'Nazwa kategorii'),
-                onChanged: (value) {
-                  setState(() {
-                    cName = value;
-                  });
-                },
-              ),
+                  initialValue: widget.category.cName,
+                  decoration:
+                      const InputDecoration(labelText: 'Nazwa kategorii'),
+                  onChanged: (value) => cName = value),
             ),
             ListTile(
               title: const Text('Data początku'),
-              subtitle: Text('${cStartDate.toLocal()}'.split(' ')[0]),
+              subtitle: Text(
+                  '${DateTime.parse(widget.category.cStartDate).toLocal()}'
+                      .split(' ')[0]),
               onTap: () {
-                //_showStartDatePicker(context);
+                _showStartDatePicker(context);
               },
             ),
             ListTile(
               title: const Text('Data końca'),
-              subtitle: Text('${cEndDate.toLocal()}'.split(' ')[0]),
+              subtitle: Text(
+                  '${DateTime.parse(widget.category.cEndDate).toLocal()}'
+                      .split(' ')[0]),
               onTap: () {
-                //_showEndDatePicker(context);
+                _showEndDatePicker(context);
               },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: TextFormField(
-                decoration: const InputDecoration(labelText: 'Budżet'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
+                  initialValue: widget.category.cBudget.toString(),
+                  decoration: const InputDecoration(labelText: 'Budżet'),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
                     cBudget = double.tryParse(value) ?? 0.0;
-                  });
-                },
-              ),
+                  }),
             ),
             const SizedBox(height: 20),
             Row(
@@ -350,11 +361,18 @@ class _EditDataWidgetState extends State<EditDataWidget> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle saving the data here
-                      print('Name: $cName');
-                      print('Start Date: $cStartDate');
-                      print('End Date: $cEndDate');
-                      print('Budget: $cBudget');
+                      var categoryToSave = Categories(
+                          cid: widget.category.cid,
+                          cgid: widget.category.cgid,
+                          cName: cName,
+                          cStartDate: cStartDate.toString(),
+                          cEndDate: cEndDate.toString(),
+                          cBudget: cBudget);
+
+                          print(categoryToSave.cName);
+                          print(categoryToSave.cStartDate);
+                          print(categoryToSave.cEndDate);
+                          print(categoryToSave.cBudget);
                     },
                     child: const Text('Zapisz'),
                   ),
@@ -363,12 +381,6 @@ class _EditDataWidgetState extends State<EditDataWidget> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        cName = '';
-                        cStartDate = DateTime.now();
-                        cEndDate = DateTime.now();
-                        cBudget = 0.0;
-                      });
                       var state = context
                           .findAncestorStateOfType<_CategoriesPageState>();
                       state?.setState(() {
