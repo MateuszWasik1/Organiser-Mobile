@@ -52,6 +52,19 @@ Future<List<Categories>> fetchCategories() async {
   }
 }
 
+//DELETE
+Future<http.Response> deleteTask(String tgid) async {
+  final http.Response response = await http
+      .delete(Uri.parse('https://localhost:44393/api/Tasks/Delete/$tgid'));
+
+  if (response.statusCode == 200) {
+    fetchCategories();
+  } else {
+    Exception('Usunięcie tasku zakończyło się niepowodzeniem');
+  }
+  return response;
+}
+
 class Tasks {
   final int tid;
   final String tgid;
@@ -262,9 +275,9 @@ class _TasksPageState extends State<TasksPage> {
                                   // EditButton(
                                   //   category: snapshot.data![index],
                                   // ),
-                                  // DeleteButton(
-                                  //   cgid: snapshot.data![index].cgid,
-                                  // ),
+                                  DeleteButton(
+                                    tgid: snapshot.data![index].tgid,
+                                  ),
                                 ],
                               ),
                             ),
@@ -283,6 +296,27 @@ class _TasksPageState extends State<TasksPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+//Buttons
+
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({super.key, required this.tgid});
+
+  final String tgid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        IconButton(
+            icon: const Icon(Icons.delete),
+            tooltip: 'Usuń Task',
+            onPressed: () => deleteTask(tgid)),
+      ],
     );
   }
 }
