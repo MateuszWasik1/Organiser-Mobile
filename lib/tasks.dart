@@ -223,6 +223,7 @@ class _TasksPageState extends State<TasksPage> {
                 Expanded(child: Text("Lokalizacja")),
                 Expanded(child: Text("Budżet")),
                 Expanded(child: Text("Status")),
+                Expanded(child: Text("")),
               ],
             ),
           ),
@@ -297,9 +298,9 @@ class _TasksPageState extends State<TasksPage> {
                                       ),
                                     ),
                                   ),
-                                  // EditButton(
-                                  //   category: snapshot.data![index],
-                                  // ),
+                                  EditButton(
+                                    task: snapshot.data![index],
+                                  ),
                                   DeleteButton(
                                     tgid: snapshot.data![index].tgid,
                                   ),
