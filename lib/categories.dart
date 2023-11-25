@@ -9,10 +9,10 @@ Future<List<Categories>> fetchCategories() async {
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
-    List<Categories> photos = [];
+    List<Categories> categories = [];
 
     for (var i in jsonResponse) {
-      photos.add(Categories(
+      categories.add(Categories(
           cid: i['cid'],
           cgid: i['cgid'],
           cName: i['cName'],
@@ -20,9 +20,9 @@ Future<List<Categories>> fetchCategories() async {
           cEndDate: i['cEndDate'],
           cBudget: i['cBudget']));
     }
-    return photos;
+    return categories;
   } else {
-    throw Exception('Failed to load photos');
+    throw Exception('Failed to load categories');
   }
 }
 
@@ -91,7 +91,7 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  late Future<List<Categories>> futurePhotos;
+  late Future<List<Categories>> futureCategories;
   late bool isEditEnabled = false;
   late Categories category = Categories(
       cid: 0,
@@ -104,7 +104,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void initState() {
     super.initState();
-    futurePhotos = fetchCategories();
+    futureCategories = fetchCategories();
   }
 
   @override
@@ -151,7 +151,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
           Center(
             child: FutureBuilder<List<Categories>>(
-              future: futurePhotos,
+              future: futureCategories,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
