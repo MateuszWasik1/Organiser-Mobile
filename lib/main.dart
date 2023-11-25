@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organiser_mobile/tasks.dart';
 import 'categories.dart';
 
 void main() {
@@ -18,9 +19,8 @@ class _MyAppState extends State<MyApp> {
   bool upwardArrow = false;
   int currentPage = 0;
   List<Widget> pages = const [
+    TasksPage(),
     CategoriesPage(),
-    // SearchPage(),
-    // AccountPage(),
   ];
   @override
   Widget build(BuildContext context) {
