@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.task),
-              label: "Taski",
+              label: "Zadania",
             ),
             NavigationDestination(
               icon: Icon(Icons.screen_search_desktop_rounded),

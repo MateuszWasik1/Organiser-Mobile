@@ -195,7 +195,7 @@ class _TasksPageState extends State<TasksPage> {
                 const Expanded(
                   flex: 8,
                   child: Text(
-                    "Taski",
+                    "Zadania",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
