@@ -75,10 +75,6 @@ class _MyAppState extends State<MyApp> {
               icon: Icon(Icons.screen_search_desktop_rounded),
               label: "Kategorie",
             ),
-            NavigationDestination(
-                icon: Icon(Icons.account_circle), 
-                label: "Konto"
-            ),
           ],
           onDestinationSelected: (int index) {
             setState(() {
