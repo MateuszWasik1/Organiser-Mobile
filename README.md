@@ -1,4 +1,4 @@
-# organiser_mobile
+# Organiser Mobile
 
 Instalacja:
 
@@ -17,3 +17,10 @@ https://github.com/MateuszWasik1/Organizer-Web
 
 Back-End: 
 https://github.com/MateuszWasik1/Organiser-BackEnd
+
+# Dokumentacja 
+
+Dokumentacja dostępna jest pod linkiem: 
+https://github.com/MateuszWasik1/Organizer-Web/blob/master/Dokumentacja%20-%20Web.pdf
+
+Bądź bezpośrednio wchodząc z poziomu głównego menu tego repozytorium pod nazwą: "Dokumentacja - Mobile.pdf" 
