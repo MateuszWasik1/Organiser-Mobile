@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organiser_mobile/savings.dart';
 import 'package:organiser_mobile/tasks.dart';
 import 'categories.dart';
 
@@ -21,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   List<Widget> pages = const [
     TasksPage(),
     CategoriesPage(),
+    SavingsPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,10 @@ class _MyAppState extends State<MyApp> {
             NavigationDestination(
               icon: Icon(Icons.screen_search_desktop_rounded),
               label: "Kategorie",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.attach_money),
+              label: "Oszczędności",
             ),
           ],
           onDestinationSelected: (int index) {
