@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:organiser_mobile/savings.dart';
-import 'package:organiser_mobile/tasks.dart';
-import 'categories.dart';
+import 'package:organiser_mobile/views/savings.dart';
+import 'package:organiser_mobile/views/tasks.dart';
+import 'package:organiser_mobile/views/categories.dart';
 
 void main() {
   runApp(const MyApp());
